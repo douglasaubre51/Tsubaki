@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Tsubaki.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:dtos="clr-namespace:Tsubaki.Dtos"
+    xmlns:viewmodels="clr-namespace:Tsubaki.ViewModels"
+    x:DataType="viewmodels:MainPageViewModel">
+    <Grid
+        Margin="16,0"
+        RowDefinitions="*"
+        RowSpacing="8">
+        <RefreshView
+            Grid.Row="2"
+            Command="{x:Binding RefreshServiceCardCollectionCommand}"
+            IsRefreshing="{x:Binding IsCollectionRefreshing}">
+            <CollectionView ItemsSource="{x:Binding ServiceCardCollection}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="dtos:RenderDtos">
+                        <Border
+                            Padding="8,4"
+                            BackgroundColor="{x:Binding ServiceCardStatusColor}"
+                            MinimumHeightRequest="120"
+                            Stroke="Transparent"
+                            StrokeShape="RoundRectangle 8">
+                            <Grid RowDefinitions="*,*" RowSpacing="16">
+                                <Label
+                                    Grid.Row="0"
+                                    FontSize="24"
+                                    LineBreakMode="TailTruncation"
+                                    Text="{x:Binding Service.Name}"
+                                    VerticalOptions="Center" />
+
+                                <HorizontalStackLayout
+                                    Grid.Row="2"
+                                    Margin="0,0,0,0"
+                                    HorizontalOptions="End"
+                                    Spacing="8">
+                                    <Button
+                                        Command="{x:Binding Source={x:RelativeSource AncestorType={x:Type viewmodels:MainPageViewModel}},
+                                                            x:DataType=viewmodels:MainPageViewModel,
+                                                            Path=StartServiceCommand}"
+                                        CommandParameter="{x:Binding .}"
+                                        ImageSource="ic_fluent_play_24_regular.png"
+                                        IsEnabled="{x:Binding IsNotActive}"
+                                        Style="{x:StaticResource ActiveBtn}" />
+
+                                    <Button
+                                        Command="{x:Binding Source={x:RelativeSource AncestorType={x:Type viewmodels:MainPageViewModel}},
+                                                            x:DataType=viewmodels:MainPageViewModel,
+                                                            Path=RestartServiceCommand}"
+                                        CommandParameter="{x:Binding .}"
+                                        ImageSource="ic_fluent_arrow_counterclockwise_24_regular.png"
+                                        IsEnabled="{x:Binding IsActive}"
+                                        Style="{x:StaticResource ActiveBtn}" />
+
+                                    <Button
+                                        Command="{x:Binding Source={x:RelativeSource AncestorType={x:Type viewmodels:MainPageViewModel}},
+                                                            x:DataType=viewmodels:MainPageViewModel,
+                                                            Path=StopServiceCommand}"
+                                        CommandParameter="{x:Binding .}"
+                                        ImageSource="ic_fluent_stop_24_filled.png"
+                                        IsEnabled="{x:Binding IsActive}"
+                                        Style="{x:StaticResource ActiveBtn}" />
+                                </HorizontalStackLayout>
+                            </Grid>
+
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{x:Binding Source={x:RelativeSource AncestorType={x:Type viewmodels:MainPageViewModel}}, x:DataType=viewmodels:MainPageViewModel, Path=GoToDeploysCommand}" CommandParameter="{Binding Service}" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout
+                        HorizontalItemSpacing="4"
+                        Orientation="Vertical"
+                        Span="{x:OnPlatform Android=1,
+                                            WinUI=3}"
+                        VerticalItemSpacing="4" />
+                </CollectionView.ItemsLayout>
+
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

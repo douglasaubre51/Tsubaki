@@ -1,0 +1,14 @@
+﻿global using CommunityToolkit.Mvvm.ComponentModel;
+global using CommunityToolkit.Mvvm.Input;
+global using Microsoft.Extensions.Logging;
+global using MvvmHelpers;
+global using Newtonsoft.Json;
+global using System.Diagnostics;
+global using System.Net.Http.Json;
+global using Tsubaki.Dtos;
+global using Tsubaki.Enums;
+global using Tsubaki.Models;
+global using Tsubaki.Services.RestServices;
+global using Tsubaki.Storage;
+global using Tsubaki.ViewModels;
+global using Tsubaki.Views;
