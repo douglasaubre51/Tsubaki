@@ -1,4 +1,6 @@
 ﻿
+using Tsubaki.Utilities;
+
 namespace Tsubaki.ViewModels;
 
 public partial class MainPageViewModel(
@@ -8,6 +10,7 @@ public partial class MainPageViewModel(
     string green = "#CCFFCC";
     private readonly RenderClients _renderClient = renderClient;
 
+
     [ObservableProperty]
     private bool isPageLoading;
 
@@ -16,11 +19,33 @@ public partial class MainPageViewModel(
     [ObservableProperty]
     private ObservableRangeCollection<RenderDtos> serviceCardCollection = [];
 
+
+    [RelayCommand]
+    async Task RefreshCollection()
+    {
+        if (IsBusy is true) return;
+
+        IsBusy = true;
+        IsCollectionRefreshing = true;
+
+        try
+        {
+            await RefreshServiceCardCollection();
+        }
+        finally
+        {
+            IsCollectionRefreshing = false;
+            IsBusy = false;
+        }
+    }
+
     [RelayCommand]
     async Task GoToDeploys(Service selectedService)
     {
         if (IsBusy is true) return;
+
         IsBusy = true;
+
         try
         {
 
@@ -45,7 +70,10 @@ public partial class MainPageViewModel(
     async Task StopService(RenderDtos dto)
     {
         if (IsBusy is true) return;
+
         IsBusy = true;
+        IsCollectionRefreshing = true;
+
         try
         {
             await _renderClient.SuspendServiceById(dto.Service!.Id);
@@ -58,6 +86,7 @@ public partial class MainPageViewModel(
         }
         finally
         {
+            IsCollectionRefreshing = false;
             IsBusy = false;
         }
     }
@@ -66,7 +95,10 @@ public partial class MainPageViewModel(
     async Task RestartService(RenderDtos dto)
     {
         if (IsBusy is true) return;
+
         IsBusy = true;
+        IsCollectionRefreshing = true;
+
         try
         {
             await _renderClient.RestartServiceById(dto.Service!.Id);
@@ -79,6 +111,7 @@ public partial class MainPageViewModel(
         }
         finally
         {
+            IsCollectionRefreshing = false;
             IsBusy = false;
         }
     }
@@ -87,7 +120,10 @@ public partial class MainPageViewModel(
     async Task StartService(RenderDtos dto)
     {
         if (IsBusy is true) return;
+
         IsBusy = true;
+        IsCollectionRefreshing = true;
+
         try
         {
             await _renderClient.ResumeServiceById(dto.Service!.Id);
@@ -100,6 +136,7 @@ public partial class MainPageViewModel(
         }
         finally
         {
+            IsCollectionRefreshing = false;
             IsBusy = false;
         }
     }
@@ -121,11 +158,11 @@ public partial class MainPageViewModel(
     [RelayCommand]
     async Task RefreshServiceCardCollection()
     {
-        IsCollectionRefreshing = true;
         try
         {
             var data = await _renderClient.GetAllServices();
             if (data is null || data.Count == 0) return;
+
             foreach (var s in data)
             {
                 if (s.Service!.Suspended != StatusEnum.suspended.ToString())
@@ -147,26 +184,28 @@ public partial class MainPageViewModel(
         catch (Exception ex)
         {
             Debug.WriteLine(ex.Message);
-        }
-        finally
-        {
-            IsCollectionRefreshing = false;
+            await AlertUtility.ShowAdvancedAlertDialog("Collection Refreshing error!");
         }
     }
 
     async partial void OnIsPageLoadingChanged(bool value)
     {
         if (value is false) return;
+
         IsBusy = true;
+        IsCollectionRefreshing = true;
+
         try
         {
             if (ServiceCardCollection.Count is not 0) return;
+
             var data = await _renderClient.GetAllServices();
             if (data is null || data.Count == 0)
             {
                 Console.WriteLine("empty data!");
                 return;
             }
+
             foreach (var s in data)
             {
                 if (s.Service!.Suspended != StatusEnum.suspended.ToString())
@@ -183,15 +222,17 @@ public partial class MainPageViewModel(
                 }
             }
 
-            ServiceCardCollection.AddRange(data);
+            ServiceCardCollection.ReplaceRange(data);
         }
         catch (Exception ex)
         {
             Debug.WriteLine(ex.Message);
+            await AlertUtility.ShowClassicAlertDialog();
         }
         finally
         {
             IsBusy = false;
+            IsCollectionRefreshing = false;
             IsPageLoading = false;
         }
     }

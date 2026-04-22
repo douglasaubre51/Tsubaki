@@ -62,7 +62,6 @@ public partial class DeploysViewModel(RenderClients renderClient) : Tsubaki.View
                 }
 
                 await Task.Delay(300000, keepAliveCts);
-                //await Task.Delay(1000, keepAliveCts);
             }
         }
         catch (Exception ex)
