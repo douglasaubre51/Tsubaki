@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Grid
+    x:Class="Tsubaki.ViewTemplates.ServiceLogHeaderViewTemplate"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:Tsubaki.ViewModels"
+    x:DataType="viewmodels:DeploysViewModel"
+    RowDefinitions="Auto,Auto">
+    <!--  Browser launcher  -->
+    <Border
+        Grid.Row="0"
+        Padding="20"
+        BackgroundColor="#FCE4EC"
+        StrokeShape="RoundRectangle 8"
+        StrokeThickness="0">
+        <Label
+            FontSize="16"
+            HorizontalOptions="End"
+            Text="Swipe right to launch"
+            TextColor="#F06292" />
+
+        <Border.GestureRecognizers>
+            <SwipeGestureRecognizer Command="{x:Binding LaunchServiceCommand}" Direction="Right" />
+        </Border.GestureRecognizers>
+    </Border>
+
+    <!--  Keep alive card  -->
+    <Border
+        Grid.Row="1"
+        Margin="0,10"
+        Style="{x:StaticResource SoftCard}">
+        <Grid
+            Padding="16"
+            BackgroundColor="#E8F5E9"
+            HorizontalOptions="Fill"
+            MinimumHeightRequest="200"
+            RowDefinitions="Auto,Auto,Auto,*,Auto">
+            <Label
+                Grid.Row="0"
+                FontFamily="PoppinsSemiBold"
+                FontSize="32"
+                Text="Keep Alive"
+                TextColor="#4CAF50" />
+
+            <VerticalStackLayout Grid.Row="1">
+                <Label Text="{x:Binding RetryCounterHistory, StringFormat='Past Retries: {0}'}" />
+                <Label Text="{x:Binding KeepAliveRetryCounter, StringFormat='Current Retries: {0}'}" />
+            </VerticalStackLayout>
+
+            <Label
+                Grid.Row="2"
+                FontFamily="PoppinsMedium"
+                FontSize="20"
+                Text="{x:Binding KeepAliveStatusMessage,
+                                 StringFormat='Status: {0}'}" />
+
+            <Grid
+                Grid.Row="4"
+                Margin="0,16,0,0"
+                ColumnDefinitions="*,*"
+                ColumnSpacing="8"
+                HorizontalOptions="Fill">
+                <Button
+                    Grid.Column="0"
+                    Command="{x:Binding TriggerKeepAliveCommand}"
+                    IsEnabled="{x:Binding KeepAliveNotActive}"
+                    MinimumWidthRequest="48"
+                    Text="Start" />
+
+                <Button
+                    Grid.Column="1"
+                    BackgroundColor="#EDE7F6"
+                    Command="{x:Binding StopKeepAliveCommand}"
+                    MinimumWidthRequest="48"
+                    Text="Stop"
+                    TextColor="#673AB7" />
+            </Grid>
+        </Grid>
+    </Border>
+</Grid>

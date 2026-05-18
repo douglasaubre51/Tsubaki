@@ -79,33 +79,46 @@ public partial class MainPageViewModel(RenderClients renderClient) : BaseViewMod
     [RelayCommand]
     async Task RefreshServiceCardCollection()
     {
-        await Task.Run(async () =>
+        try
         {
-            var data = await _renderClient.GetAllServices();
-            if (data is null || data.Count == 0) return;
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet) return;
 
-            Debug.WriteLine("Refreshing service data!");
-
-            foreach (var s in data)
+            await Task.Run(async () =>
             {
-                if (s.Service!.Suspended != StatusEnum.suspended.ToString())
-                {
-                    s.IsActive = true;
-                    s.ServiceCardStatusColor = Color.FromHex(CardColorStore.ActiveCard);
-                    s.IsNotActive = false;
-                }
-                else
-                {
-                    s.IsActive = false;
-                    s.IsNotActive = true;
-                    s.ServiceCardStatusColor = Color.FromHex(CardColorStore.SuspendedCard);
-                }
-            }
+                var data = await _renderClient.GetAllServices();
+                if (data is null || data.Count == 0) return;
 
-            MainThread.BeginInvokeOnMainThread(() =>
-                ServiceCardCollection.ReplaceRange(data)
-            );
-        });
+                Debug.WriteLine("Refreshing service data!");
+
+                foreach (var s in data)
+                {
+                    if (s.Service!.Suspended != StatusEnum.suspended.ToString())
+                    {
+                        s.IsActive = true;
+                        s.ServiceCardStatusColor = Color.FromHex(CardColorStore.ActiveCard);
+                        s.IsNotActive = false;
+                    }
+                    else
+                    {
+                        s.IsActive = false;
+                        s.IsNotActive = true;
+                        s.ServiceCardStatusColor = Color.FromHex(CardColorStore.SuspendedCard);
+                    }
+                }
+
+                MainThread.BeginInvokeOnMainThread(() =>
+                    ServiceCardCollection.ReplaceRange(data)
+                );
+            });
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine("Service refresh error: " + ex.Message);
+        }
+        finally
+        {
+            IsCollectionRefreshing = false;
+        }
     }
 
     [RelayCommand]

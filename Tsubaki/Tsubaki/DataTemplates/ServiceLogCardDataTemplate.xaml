@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<DataTemplate
+    x:Class="Tsubaki.DataTemplates.ServiceLogCardDataTemplate"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:dtos="clr-namespace:Tsubaki.Dtos"
+    x:DataType="dtos:DeployDtos">
+
+    <Border Style="{x:StaticResource LiveCard}">
+        <VerticalStackLayout Spacing="4">
+            <Label
+                CharacterSpacing="1.5"
+                FontAttributes="Bold"
+                FontFamily="PoppinsMedium"
+                FontSize="18"
+                Text="{x:Binding Deploy.Status}"
+                TextTransform="Uppercase" />
+
+            <Label
+                FontFamily="PoppinsRegular"
+                FontSize="16"
+                Text="{x:Binding Deploy.Trigger}"
+                TextTransform="Lowercase" />
+
+            <Label
+                FontSize="13"
+                LineBreakMode="TailTruncation"
+                Text="{x:Binding Deploy.Commit.Message}" />
+            <Label FontSize="10" Text="{x:Binding Deploy.Id}" />
+
+            <Label
+                Margin="0,8,0,0"
+                FontSize="16"
+                Text="{x:Binding Deploy.StartedAt,
+                                 StringFormat='StartTime: {0}'}" />
+            <Label FontSize="16" Text="{x:Binding Deploy.FinishedAt, StringFormat='FinishTime: {0}'}" />
+            <Label FontSize="16" Text="{x:Binding Deploy.UpdatedAt, StringFormat='UpdatedAt: {0}'}" />
+        </VerticalStackLayout>
+
+        <Border.Triggers>
+            <DataTrigger
+                Binding="{x:Binding IsCanceled}"
+                TargetType="Border"
+                Value="True">
+                <Setter Property="Background" Value="Orange" />
+            </DataTrigger>
+
+            <DataTrigger
+                Binding="{x:Binding IsDeactivated}"
+                TargetType="Border"
+                Value="True">
+                <Setter Property="Background" Value="LightYellow" />
+            </DataTrigger>
+
+            <DataTrigger
+                Binding="{x:Binding DidBuildFail}"
+                TargetType="Border"
+                Value="True">
+                <Setter Property="Background" Value="IndianRed" />
+            </DataTrigger>
+        </Border.Triggers>
+    </Border>
+</DataTemplate>

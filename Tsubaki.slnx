@@ -1,5 +1,7 @@
 <Solution>
-  <Project Path="Tsubaki/Tsubaki.Droid/Tsubaki.Droid.csproj" />
+  <Project Path="Tsubaki/Tsubaki.Droid/Tsubaki.Droid.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
   <Project Path="Tsubaki/Tsubaki.WinUI/Tsubaki.WinUI.csproj">
     <Platform Project="x64" />
   </Project>
