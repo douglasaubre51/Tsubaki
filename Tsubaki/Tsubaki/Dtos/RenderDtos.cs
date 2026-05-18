@@ -3,7 +3,7 @@
 public class RenderDtos
 {
     public Service? Service { get; set; }
-    public string ServiceCardStatusColor { get; set; } = "Black";
+    public Color ServiceCardStatusColor { get; set; } = Colors.Red;
     public bool IsActive { get; set; } = false;
     public bool IsNotActive { get; set; } = true;
 }

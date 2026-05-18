@@ -2,18 +2,20 @@
 
 public partial class MainPage : ContentPage
 {
-    int count = 0;
-
     public MainPage(MainPageViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;
     }
 
-    protected override void OnAppearing()
+    protected async override void OnAppearing()
     {
         base.OnAppearing();
+
         var context = BindingContext as MainPageViewModel;
-        context!.IsPageLoading = true;
+
+        await Dispatcher.DispatchAsync(() =>
+            context!.IsPageLoading = true
+        );
     }
 }

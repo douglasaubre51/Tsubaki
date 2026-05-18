@@ -7,8 +7,5 @@
     xmlns:views="clr-namespace:Tsubaki.Views"
     Title="Tsubaki"
     Shell.FlyoutBehavior="Disabled">
-    <ShellContent
-        Title="Render Services"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage" />
 </Shell>

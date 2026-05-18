@@ -2,6 +2,71 @@
 <?xaml-comp compile="true" ?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
+    <!--  Flat Icon buttons  -->
+    <Style x:Key="FlatIconBtn" TargetType="Button">
+        <Setter Property="Background" Value="Transparent" />
+
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="Scale" Value="1" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="Scale" Value=".8" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+
+    <!--  Page labels  -->
+    <Style x:Key="PageTitleLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="PoppinsMedium" />
+        <Setter Property="FontSize" Value="32" />
+        <Setter Property="LineBreakMode" Value="TailTruncation" />
+        <Setter Property="MaxLines" Value="1" />
+        <Setter Property="TextColor" Value="Black" />
+    </Style>
+    <Style x:Key="PageSubtitleLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="PoppinsMedium" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="LineBreakMode" Value="TailTruncation" />
+        <Setter Property="MaxLines" Value="2" />
+    </Style>
+
+
+    <!--  Service Card Labels  -->
+    <Style x:Key="CardTitleLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="PoppinsMedium" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="LineBreakMode" Value="TailTruncation" />
+        <Setter Property="MaxLines" Value="1" />
+    </Style>
+    <Style x:Key="CardSubtitleLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="PoppinsRegular" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="LineBreakMode" Value="TailTruncation" />
+        <Setter Property="MaxLines" Value="3" />
+    </Style>
+
+
+    <!--  Service Card Borders  -->
+    <Style x:Key="ServiceCardBorder" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{x:StaticResource PrimarySurface}" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 4" />
+        <Setter Property="StrokeThickness" Value="0" />
+
+        <Setter Property="Padding" Value="4" />
+    </Style>
+
+
     <Style x:Key="LiveCard" TargetType="Border">
         <Setter Property="Background" Value="LightGreen" />
         <Setter Property="StrokeThickness" Value="0" />
@@ -20,22 +85,28 @@
                 <VisualStateGroup x:Name="CommonStates">
                     <VisualState x:Name="Normal">
                         <VisualState.Setters>
-                            <Setter Property="TextColor" Value="Black" />
                             <Setter Property="BackgroundColor" Value="Transparent" />
+                            <Setter Property="Scale" Value="1" />
                         </VisualState.Setters>
                     </VisualState>
 
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="TextColor" Value="Grey" />
-                            <Setter Property="BackgroundColor" Value="LightGrey" />
+                            <Setter Property="BackgroundColor" Value="Transparent" />
                         </VisualState.Setters>
                     </VisualState>
 
                     <VisualState x:Name="PointerOver">
                         <VisualState.Setters>
-                            <Setter Property="TextColor" Value="Black" />
-                            <Setter Property="BackgroundColor" Value="WhiteSmoke" />
+                            <Setter Property="BackgroundColor" Value="Transparent" />
+                            <Setter Property="Scale" Value="1.2" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="Transparent" />
+                            <Setter Property="Scale" Value=".8" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -449,11 +520,11 @@
 
     <Style ApplyToDerivedTypes="True" TargetType="Page">
         <Setter Property="Padding" Value="0" />
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource PrimaryBackground}, Dark={StaticResource OffBlack}}" />
     </Style>
 
     <Style ApplyToDerivedTypes="True" TargetType="Shell">
-        <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}" />
+        <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Light={StaticResource PrimaryBackground}, Dark={StaticResource OffBlack}}" />
         <Setter Property="Shell.ForegroundColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource SecondaryDarkText}}" />
         <Setter Property="Shell.TitleColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource SecondaryDarkText}}" />
         <Setter Property="Shell.DisabledColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />

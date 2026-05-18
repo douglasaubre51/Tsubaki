@@ -10,6 +10,14 @@ public static class MauiProgramExtensions
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                fonts.AddFont("Poppins-Bold.ttf", "PoppinsBold");
+                fonts.AddFont("Poppins-BoldItalic.ttf", "PoppinsBoldItalic");
+                fonts.AddFont("Poppins-ExtraBold.ttf", "PoppinsExtraBold");
+                fonts.AddFont("Poppins-ExtraBoldItalic.ttf", "PoppinsExtraBoldItalic");
+                fonts.AddFont("Poppins-Italic.ttf", "PoppinsItalic");
+                fonts.AddFont("Poppins-Medium.ttf", "PoppinsMedium");
+                fonts.AddFont("Poppins-SemiBold.ttf", "PoppinsSemiBold");
+                fonts.AddFont("Poppins-SemiBoldItalic.ttf", "PoppinsSemiBoldItalic");
             });
 
 #if DEBUG
@@ -18,7 +26,7 @@ public static class MauiProgramExtensions
         // Add Services
         builder.Services.AddTransient<RenderClients>();
 
-        builder.Services.AddTransient<MainPageViewModel>();
+        builder.Services.AddSingleton<MainPageViewModel>();
         builder.Services.AddTransient<DeploysViewModel>();
 
         return builder;

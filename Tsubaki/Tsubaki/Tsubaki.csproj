@@ -32,4 +32,17 @@
 		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Components\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="DataTemplates\ServiceCardDataTemplate.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="ViewTemplates\EmptyViewTemplate.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

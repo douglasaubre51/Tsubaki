@@ -1,43 +1,117 @@
-﻿
-using Tsubaki.Utilities;
+﻿namespace Tsubaki.ViewModels;
 
-namespace Tsubaki.ViewModels;
-
-public partial class MainPageViewModel(
-    RenderClients renderClient) : BaseViewModel
+public partial class MainPageViewModel(RenderClients renderClient) : BaseViewModel
 {
-    string red = "#FFCCCC";
-    string green = "#CCFFCC";
     private readonly RenderClients _renderClient = renderClient;
-
 
     [ObservableProperty]
     private bool isPageLoading;
-
     [ObservableProperty]
     private bool isCollectionRefreshing;
+    [ObservableProperty]
+    private bool isServiceChanging;
+
     [ObservableProperty]
     private ObservableRangeCollection<RenderDtos> serviceCardCollection = [];
 
 
-    [RelayCommand]
-    async Task RefreshCollection()
+    async partial void OnIsPageLoadingChanged(bool value)
     {
-        if (IsBusy is true) return;
-
-        IsBusy = true;
-        IsCollectionRefreshing = true;
+        if (value is false) return;
 
         try
         {
-            await RefreshServiceCardCollection();
+            if (ServiceCardCollection.Count is not 0) return;
+
+            IsBusy = true;
+            IsServiceChanging = true;
+
+            await Task.Run(async () =>
+            {
+                Debug.WriteLine("Fetching service data...");
+
+                var data = await _renderClient.GetAllServices();
+                if (data is null || data.Count == 0)
+                {
+                    Debug.WriteLine("empty data!");
+                    return;
+                }
+
+                Debug.WriteLine("Service count: " + data.Count);
+
+                foreach (var s in data)
+                {
+                    if (s.Service!.Suspended != StatusEnum.suspended.ToString())
+                    {
+                        s.IsActive = true;
+                        s.ServiceCardStatusColor = Color.FromHex(CardColorStore.ActiveCard);
+                        s.IsNotActive = false;
+                    }
+                    else
+                    {
+                        s.IsActive = false;
+                        s.IsNotActive = true;
+                        s.ServiceCardStatusColor = Color.FromHex(CardColorStore.SuspendedCard);
+                    }
+                }
+
+                Debug.WriteLine("Fetching service data complete!");
+
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    Debug.WriteLine("Flushing data to collection!");
+                    ServiceCardCollection.AddRange(data);
+                });
+            });
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
         }
         finally
         {
-            IsCollectionRefreshing = false;
+            IsServiceChanging = false;
             IsBusy = false;
+            IsPageLoading = false;
         }
     }
+
+    [RelayCommand]
+    async Task RefreshServiceCardCollection()
+    {
+        await Task.Run(async () =>
+        {
+            var data = await _renderClient.GetAllServices();
+            if (data is null || data.Count == 0) return;
+
+            Debug.WriteLine("Refreshing service data!");
+
+            foreach (var s in data)
+            {
+                if (s.Service!.Suspended != StatusEnum.suspended.ToString())
+                {
+                    s.IsActive = true;
+                    s.ServiceCardStatusColor = Color.FromHex(CardColorStore.ActiveCard);
+                    s.IsNotActive = false;
+                }
+                else
+                {
+                    s.IsActive = false;
+                    s.IsNotActive = true;
+                    s.ServiceCardStatusColor = Color.FromHex(CardColorStore.SuspendedCard);
+                }
+            }
+
+            MainThread.BeginInvokeOnMainThread(() =>
+                ServiceCardCollection.ReplaceRange(data)
+            );
+        });
+    }
+
+    [RelayCommand]
+    async Task RefreshCollection()
+        => await RefreshServiceCardCollection();
+
 
     [RelayCommand]
     async Task GoToDeploys(Service selectedService)
@@ -45,12 +119,11 @@ public partial class MainPageViewModel(
         if (IsBusy is true) return;
 
         IsBusy = true;
-
         try
         {
-
             await Shell.Current.GoToAsync(
                 "Deploys",
+                false,
                 new Dictionary<string, object>
                 {
                     { "SelectedService" , selectedService  }
@@ -66,14 +139,14 @@ public partial class MainPageViewModel(
         }
     }
 
+
     [RelayCommand]
     async Task StopService(RenderDtos dto)
     {
         if (IsBusy is true) return;
 
         IsBusy = true;
-        IsCollectionRefreshing = true;
-
+        IsServiceChanging = true;
         try
         {
             await _renderClient.SuspendServiceById(dto.Service!.Id);
@@ -86,19 +159,17 @@ public partial class MainPageViewModel(
         }
         finally
         {
-            IsCollectionRefreshing = false;
+            IsServiceChanging = false;
             IsBusy = false;
         }
     }
-
     [RelayCommand]
     async Task RestartService(RenderDtos dto)
     {
         if (IsBusy is true) return;
 
         IsBusy = true;
-        IsCollectionRefreshing = true;
-
+        IsServiceChanging = true;
         try
         {
             await _renderClient.RestartServiceById(dto.Service!.Id);
@@ -111,19 +182,17 @@ public partial class MainPageViewModel(
         }
         finally
         {
-            IsCollectionRefreshing = false;
+            IsServiceChanging = false;
             IsBusy = false;
         }
     }
-
     [RelayCommand]
     async Task StartService(RenderDtos dto)
     {
         if (IsBusy is true) return;
 
         IsBusy = true;
-        IsCollectionRefreshing = true;
-
+        IsServiceChanging = true;
         try
         {
             await _renderClient.ResumeServiceById(dto.Service!.Id);
@@ -136,10 +205,11 @@ public partial class MainPageViewModel(
         }
         finally
         {
-            IsCollectionRefreshing = false;
+            IsServiceChanging = false;
             IsBusy = false;
         }
     }
+
 
     [RelayCommand]
     async Task OpenProjectSite(string url)
@@ -152,88 +222,6 @@ public partial class MainPageViewModel(
         {
             Debug.WriteLine("error launching site: " + ex.Message);
             await Shell.Current.DisplayAlertAsync("Error", "error launching site!", "ok");
-        }
-    }
-
-    [RelayCommand]
-    async Task RefreshServiceCardCollection()
-    {
-        try
-        {
-            var data = await _renderClient.GetAllServices();
-            if (data is null || data.Count == 0) return;
-
-            foreach (var s in data)
-            {
-                if (s.Service!.Suspended != StatusEnum.suspended.ToString())
-                {
-                    s.IsActive = true;
-                    s.ServiceCardStatusColor = green;
-                    s.IsNotActive = false;
-                }
-                else
-                {
-                    s.IsActive = false;
-                    s.IsNotActive = true;
-                    s.ServiceCardStatusColor = red;
-                }
-            }
-
-            ServiceCardCollection.ReplaceRange(data);
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine(ex.Message);
-            await AlertUtility.ShowAdvancedAlertDialog("Collection Refreshing error!");
-        }
-    }
-
-    async partial void OnIsPageLoadingChanged(bool value)
-    {
-        if (value is false) return;
-
-        IsBusy = true;
-        IsCollectionRefreshing = true;
-
-        try
-        {
-            if (ServiceCardCollection.Count is not 0) return;
-
-            var data = await _renderClient.GetAllServices();
-            if (data is null || data.Count == 0)
-            {
-                Console.WriteLine("empty data!");
-                return;
-            }
-
-            foreach (var s in data)
-            {
-                if (s.Service!.Suspended != StatusEnum.suspended.ToString())
-                {
-                    s.IsActive = true;
-                    s.ServiceCardStatusColor = green;
-                    s.IsNotActive = false;
-                }
-                else
-                {
-                    s.IsActive = false;
-                    s.IsNotActive = true;
-                    s.ServiceCardStatusColor = red;
-                }
-            }
-
-            ServiceCardCollection.ReplaceRange(data);
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine(ex.Message);
-            await AlertUtility.ShowClassicAlertDialog();
-        }
-        finally
-        {
-            IsBusy = false;
-            IsCollectionRefreshing = false;
-            IsPageLoading = false;
         }
     }
 }

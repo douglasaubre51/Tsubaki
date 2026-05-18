@@ -3,83 +3,65 @@
     x:Class="Tsubaki.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:datatemplates="clr-namespace:Tsubaki.DataTemplates"
     xmlns:dtos="clr-namespace:Tsubaki.Dtos"
     xmlns:viewmodels="clr-namespace:Tsubaki.ViewModels"
+    xmlns:viewtemplates="clr-namespace:Tsubaki.ViewTemplates"
     x:DataType="viewmodels:MainPageViewModel">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{x:Binding RefreshCollectionCommand}" Text="Refresh" />
-    </ContentPage.ToolbarItems>
 
     <Grid
-        Margin="8,8"
-        RowDefinitions="*"
+        Margin="16"
+        RowDefinitions="Auto,*"
         RowSpacing="8">
+        <!--  Header  -->
+        <Grid
+            Grid.Row="0"
+            Margin="4,0,0,16"
+            ColumnDefinitions="Auto,Auto,*">
+            <Label
+                Grid.Column="0"
+                Style="{x:StaticResource PageTitleLabel}"
+                Text="Render Services" />
+
+            <HorizontalStackLayout
+                Grid.Column="1"
+                Margin="16,0,0,0"
+                HorizontalOptions="Start"
+                Spacing="4"
+                VerticalOptions="Center">
+                <Label
+                    FontFamily="PoppinsMedium"
+                    FontSize="16"
+                    IsVisible="{x:Binding IsServiceChanging}"
+                    Text="Service changing"
+                    VerticalOptions="End" />
+
+                <ActivityIndicator
+                    HeightRequest="10"
+                    IsEnabled="{x:Binding IsServiceChanging}"
+                    IsRunning="{x:Binding IsServiceChanging}"
+                    VerticalOptions="Center"
+                    WidthRequest="10" />
+            </HorizontalStackLayout>
+
+            <Button
+                Grid.Column="2"
+                Command="{x:Binding RefreshCollectionCommand}"
+                HorizontalOptions="End"
+                ImageSource="refresh_24dp.png"
+                Style="{x:StaticResource FlatIconBtn}"
+                VerticalOptions="Center" />
+        </Grid>
+
+        <!--  Spinner  -->
         <RefreshView
-            Grid.Row="2"
+            Grid.Row="1"
             Command="{x:Binding RefreshServiceCardCollectionCommand}"
             IsRefreshing="{x:Binding IsCollectionRefreshing}">
+            <!--  Body  -->
             <CollectionView ItemsSource="{x:Binding ServiceCardCollection}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="dtos:RenderDtos">
-                        <Border
-                            BackgroundColor="{x:Binding ServiceCardStatusColor}"
-                            Stroke="Transparent"
-                            StrokeShape="RoundRectangle 8">
-                            <Grid
-                                Margin="16"
-                                RowDefinitions="*,*"
-                                RowSpacing="32"
-                                VerticalOptions="Start">
-                                <Label
-                                    Grid.Row="0"
-                                    FontFamily="OpenSansSemibold"
-                                    FontSize="24"
-                                    LineBreakMode="TailTruncation"
-                                    Text="{x:Binding Service.Name}"
-                                    VerticalOptions="Center" />
-
-                                <HorizontalStackLayout
-                                    Grid.Row="2"
-                                    HorizontalOptions="End"
-                                    MinimumHeightRequest="54"
-                                    Spacing="8">
-                                    <Button
-                                        Command="{x:Binding Source={x:RelativeSource AncestorType={x:Type viewmodels:MainPageViewModel}},
-                                                            x:DataType=viewmodels:MainPageViewModel,
-                                                            Path=StartServiceCommand}"
-                                        CommandParameter="{x:Binding .}"
-                                        ImageSource="ic_fluent_play_24_regular.png"
-                                        IsEnabled="{x:Binding IsNotActive}"
-                                        Style="{x:StaticResource ActiveBtn}"
-                                        VerticalOptions="Start" />
-
-                                    <Button
-                                        Command="{x:Binding Source={x:RelativeSource AncestorType={x:Type viewmodels:MainPageViewModel}},
-                                                            x:DataType=viewmodels:MainPageViewModel,
-                                                            Path=RestartServiceCommand}"
-                                        CommandParameter="{x:Binding .}"
-                                        ImageSource="ic_fluent_arrow_counterclockwise_24_regular.png"
-                                        IsEnabled="{x:Binding IsActive}"
-                                        Style="{x:StaticResource ActiveBtn}"
-                                        VerticalOptions="Start" />
-
-                                    <Button
-                                        Command="{x:Binding Source={x:RelativeSource AncestorType={x:Type viewmodels:MainPageViewModel}},
-                                                            x:DataType=viewmodels:MainPageViewModel,
-                                                            Path=StopServiceCommand}"
-                                        CommandParameter="{x:Binding .}"
-                                        ImageSource="ic_fluent_stop_24_filled.png"
-                                        IsEnabled="{x:Binding IsActive}"
-                                        Style="{x:StaticResource ActiveBtn}"
-                                        VerticalOptions="Start" />
-                                </HorizontalStackLayout>
-                            </Grid>
-
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{x:Binding Source={x:RelativeSource AncestorType={x:Type viewmodels:MainPageViewModel}}, x:DataType=viewmodels:MainPageViewModel, Path=GoToDeploysCommand}" CommandParameter="{Binding Service}" />
-                            </Border.GestureRecognizers>
-                        </Border>
-                    </DataTemplate>
+                    <datatemplates:ServiceCardDataTemplate />
                 </CollectionView.ItemTemplate>
 
                 <CollectionView.ItemsLayout>
@@ -87,10 +69,13 @@
                         HorizontalItemSpacing="4"
                         Orientation="Vertical"
                         Span="{x:OnPlatform Android=1,
-                                            WinUI=3}"
+                                            WinUI=2}"
                         VerticalItemSpacing="4" />
                 </CollectionView.ItemsLayout>
 
+                <CollectionView.EmptyView>
+                    <viewtemplates:EmptyViewTemplate />
+                </CollectionView.EmptyView>
             </CollectionView>
         </RefreshView>
     </Grid>

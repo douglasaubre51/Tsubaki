@@ -12,3 +12,4 @@ global using Tsubaki.Services.RestServices;
 global using Tsubaki.Storage;
 global using Tsubaki.ViewModels;
 global using Tsubaki.Views;
+global using Tsubaki.Utilities;
