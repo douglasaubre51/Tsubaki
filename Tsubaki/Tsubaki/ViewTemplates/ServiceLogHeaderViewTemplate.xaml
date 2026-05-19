@@ -6,8 +6,8 @@
     xmlns:viewmodels="clr-namespace:Tsubaki.ViewModels"
     x:DataType="viewmodels:DeploysViewModel"
     RowDefinitions="Auto,Auto,Auto">
-    <!--  Browser launcher  -->
-    <Border
+    <!--  Browser launcher ( swipe view will crash winui apps when they try to render it!!!)  -->
+    <!--<Border
         Grid.Row="0"
         Margin="0,10,0,20"
         StrokeShape="RoundRectangle 16"
@@ -41,7 +41,7 @@
                     VerticalOptions="Center" />
             </Grid>
         </SwipeView>
-    </Border>
+    </Border>-->
 
     <!--  Keep alive card  -->
     <Border
