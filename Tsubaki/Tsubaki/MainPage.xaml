@@ -60,7 +60,7 @@
                 Scale="{x:OnIdiom Phone=2.5,
                                   Desktop=1}"
                 Style="{x:StaticResource FlatIconBtn}"
-                VerticalOptions="Center" />
+                VerticalOptions="Start" />
         </Grid>
 
         <!--  Spinner  -->

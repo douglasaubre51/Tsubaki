@@ -44,10 +44,6 @@
                         VerticalItemSpacing="4" />
                 </CollectionView.ItemsLayout>
 
-                <CollectionView.EmptyView>
-                    <viewtemplates:EmptyViewTemplate />
-                </CollectionView.EmptyView>
-
                 <CollectionView.Header>
                     <viewtemplates:ServiceLogHeaderViewTemplate />
                 </CollectionView.Header>

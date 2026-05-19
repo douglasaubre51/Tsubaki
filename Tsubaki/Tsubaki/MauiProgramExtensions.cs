@@ -1,4 +1,6 @@
-﻿namespace Tsubaki;
+﻿using CommunityToolkit.Maui;
+
+namespace Tsubaki;
 
 public static class MauiProgramExtensions
 {
@@ -6,6 +8,7 @@ public static class MauiProgramExtensions
     {
         builder
             .UseMauiApp<App>()
+            .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -18,6 +21,7 @@ public static class MauiProgramExtensions
                 fonts.AddFont("Poppins-Medium.ttf", "PoppinsMedium");
                 fonts.AddFont("Poppins-SemiBold.ttf", "PoppinsSemiBold");
                 fonts.AddFont("Poppins-SemiBoldItalic.ttf", "PoppinsSemiBoldItalic");
+                fonts.AddFont("Poppins-Regular.ttf", "PoppinsRegular");
             });
 
 #if DEBUG

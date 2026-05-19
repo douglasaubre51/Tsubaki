@@ -23,30 +23,30 @@
                                         x:DataType=viewmodels:MainPageViewModel,
                                         Path=StartServiceCommand}"
                     CommandParameter="{x:Binding .}"
+                    HorizontalOptions="End"
                     ImageSource="ic_fluent_play_24_regular.png"
                     IsVisible="{x:Binding IsNotActive}"
-                    Style="{x:StaticResource ActiveBtn}"
-                    VerticalOptions="Start" />
+                    Style="{x:StaticResource ActiveBtn}" />
 
                 <Button
                     Command="{x:Binding Source={x:RelativeSource AncestorType={x:Type viewmodels:MainPageViewModel}},
                                         x:DataType=viewmodels:MainPageViewModel,
                                         Path=RestartServiceCommand}"
                     CommandParameter="{x:Binding .}"
+                    HorizontalOptions="End"
                     ImageSource="ic_fluent_arrow_counterclockwise_24_regular.png"
                     IsVisible="{x:Binding IsActive}"
-                    Style="{x:StaticResource ActiveBtn}"
-                    VerticalOptions="Start" />
+                    Style="{x:StaticResource ActiveBtn}" />
 
                 <Button
                     Command="{x:Binding Source={x:RelativeSource AncestorType={x:Type viewmodels:MainPageViewModel}},
                                         x:DataType=viewmodels:MainPageViewModel,
                                         Path=StopServiceCommand}"
                     CommandParameter="{x:Binding .}"
+                    HorizontalOptions="End"
                     ImageSource="ic_fluent_stop_24_filled.png"
                     IsVisible="{x:Binding IsActive}"
-                    Style="{x:StaticResource ActiveBtn}"
-                    VerticalOptions="Start" />
+                    Style="{x:StaticResource ActiveBtn}" />
             </HorizontalStackLayout>
         </Grid>
 
