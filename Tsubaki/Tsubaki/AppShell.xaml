@@ -12,5 +12,13 @@
         <toolkit:StatusBarBehavior StatusBarColor="{x:AppThemeBinding Light=White, Dark={x:StaticResource OffBlack}}" StatusBarStyle="{x:AppThemeBinding Light=DarkContent, Dark=LightContent}" />
     </Shell.Behaviors>
 
-    <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage" />
+    <TabBar>
+        <Tab Title="Render">
+            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage" />
+        </Tab>
+
+        <Tab Title="Supabase">
+            <ShellContent ContentTemplate="{DataTemplate views:SupabaseView}" Route="SupabaseView" />
+        </Tab>
+    </TabBar>
 </Shell>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Tsubaki.Views.SupabaseView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:datatemplates="clr-namespace:Tsubaki.DataTemplates"
+    xmlns:viewmodels="clr-namespace:Tsubaki.ViewModels"
+    xmlns:viewtemplates="clr-namespace:Tsubaki.ViewTemplates"
+    x:DataType="viewmodels:SupabaseViewModel">
+
+    <Grid Margin="16" RowDefinitions="Auto,*" RowSpacing="32">
+        <Label
+            Grid.Row="0"
+            Style="{x:StaticResource PageTitleLabel}"
+            Text="Supabase projects" />
+
+        <CollectionView Grid.Row="1" ItemsSource="{x:Binding Projects}">
+            <CollectionView.ItemTemplate>
+                <datatemplates:SupabaseProjectCardDataTemplate />
+            </CollectionView.ItemTemplate>
+
+            <CollectionView.EmptyView>
+                <viewtemplates:EmptyViewTemplate />
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout
+                    HorizontalItemSpacing="4"
+                    Orientation="Vertical"
+                    Span="3"
+                    VerticalItemSpacing="4" />
+            </CollectionView.ItemsLayout>
+        </CollectionView>
+
+        <ActivityIndicator Grid.Row="1" IsRunning="{x:Binding IsBusy}" />
+    </Grid>
+</ContentPage>

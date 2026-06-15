@@ -28,10 +28,15 @@ public static class MauiProgramExtensions
         builder.Logging.AddDebug();
 #endif
         // Add Services
-        builder.Services.AddTransient<RenderClients>();
+        builder.Services.AddSingleton<RenderClients>();
+        builder.Services.AddSingleton<SupabaseClients>();
+        builder.Services.AddSingleton<MisatoApiService>();
 
         builder.Services.AddSingleton<MainPageViewModel>();
+        builder.Services.AddSingleton<SupabaseViewModel>();
+
         builder.Services.AddTransient<DeploysViewModel>();
+
 
         return builder;
     }

@@ -42,10 +42,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Components\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <MauiSplashScreen Include="Resources\Splash\dotnet_bot.png" />
 	</ItemGroup>
 
@@ -56,12 +52,21 @@
 	  <MauiXaml Update="DataTemplates\ServiceLogCardDataTemplate.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="DataTemplates\SupabaseProjectCardDataTemplate.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="ViewTemplates\EmptyViewTemplate.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="ViewTemplates\ServiceLogHeaderViewTemplate.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Views\SupabaseView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </None>
 	</ItemGroup>
 
 </Project>

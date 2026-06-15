@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<DataTemplate x:Class="Tsubaki.DataTemplates.SupabaseProjectCardDataTemplate"
+              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:supabasemodels="clr-namespace:Tsubaki.Models.SupabaseModels"
+              x:DataType="supabasemodels:SupabaseProjectModel">
+
+    <Border Background="{x:StaticResource SecondarySurface}" Style="{x:StaticResource ServiceCardBorder}">
+        <Grid ColumnDefinitions="*,*"
+              RowDefinitions="Auto,Auto"
+              RowSpacing="8">
+            <Label Grid.Row="0"
+                   Grid.Column="0"
+                   Style="{x:StaticResource CardTitleLabel}"
+                   Text="{x:Binding Name}" />
+
+            <Label Grid.Row="0"
+                   Grid.Column="1"
+                   HorizontalOptions="End"
+                   Style="{x:StaticResource CardSubtitleLabel}"
+                   Text="{x:Binding Status}" />
+        </Grid>
+    </Border>
+</DataTemplate>
