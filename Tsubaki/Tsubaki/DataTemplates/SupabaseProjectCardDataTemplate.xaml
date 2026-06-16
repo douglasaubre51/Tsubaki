@@ -5,7 +5,7 @@
               xmlns:supabasemodels="clr-namespace:Tsubaki.Models.SupabaseModels"
               x:DataType="supabasemodels:SupabaseProjectModel">
 
-    <Border Background="{x:StaticResource SecondarySurface}" Style="{x:StaticResource ServiceCardBorder}">
+    <Border BackgroundColor="{x:Binding StatusColor, Mode=TwoWay}" Style="{x:StaticResource ServiceCardBorder}">
         <Grid ColumnDefinitions="*,*"
               RowDefinitions="Auto,Auto"
               RowSpacing="8">
@@ -18,7 +18,16 @@
                    Grid.Column="1"
                    HorizontalOptions="End"
                    Style="{x:StaticResource CardSubtitleLabel}"
-                   Text="{x:Binding Status}" />
+                   Text="{x:Binding Status,
+                                    Mode=TwoWay}" />
+
+            <Button Grid.Row="1"
+                    Grid.Column="1"
+                    Clicked="RefreshBtnClicked"
+                    HorizontalOptions="End"
+                    ImageSource="refresh_24dp.png"
+                    SemanticProperties.Description="Reset"
+                    Style="{x:StaticResource FlatIconBtn2}" />
         </Grid>
     </Border>
 </DataTemplate>

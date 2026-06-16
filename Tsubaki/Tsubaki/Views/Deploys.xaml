@@ -1,47 +1,42 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-    x:Class="Tsubaki.Views.Deploys"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:datatemplates="clr-namespace:Tsubaki.DataTemplates"
-    xmlns:dtos="clr-namespace:Tsubaki.Dtos"
-    xmlns:viewmodels="clr-namespace:Tsubaki.ViewModels"
-    xmlns:viewtemplates="clr-namespace:Tsubaki.ViewTemplates"
-    x:DataType="viewmodels:DeploysViewModel"
-    Shell.NavBarIsVisible="False">
+<ContentPage x:Class="Tsubaki.Views.Deploys"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:datatemplates="clr-namespace:Tsubaki.DataTemplates"
+             xmlns:dtos="clr-namespace:Tsubaki.Dtos"
+             xmlns:viewmodels="clr-namespace:Tsubaki.ViewModels"
+             xmlns:viewtemplates="clr-namespace:Tsubaki.ViewTemplates"
+             x:DataType="viewmodels:DeploysViewModel"
+             Shell.NavBarIsVisible="False">
 
     <Grid Margin="10" RowDefinitions="Auto,*">
         <!--  Service log cards  -->
-        <ActivityIndicator
-            Grid.Row="0"
-            IsRunning="{x:Binding IsBusy}"
-            IsVisible="{x:Binding IsBusy}" />
+        <ActivityIndicator Grid.Row="0"
+                           IsRunning="{x:Binding IsBusy}"
+                           IsVisible="{x:Binding IsBusy}" />
 
-        <RefreshView
-            Grid.Row="1"
-            Command="{x:Binding RefreshDeployCardCollectionCommand}"
-            IsRefreshing="{x:Binding IsCollectionRefreshing}">
-            <CollectionView
-                Grid.Row="2"
-                Margin="0,16,0,0"
-                ItemSizingStrategy="MeasureFirstItem"
-                ItemsSource="{x:Binding DeployCardCollection}"
-                ItemsUpdatingScrollMode="KeepScrollOffset"
-                RemainingItemsThreshold="15"
-                RemainingItemsThresholdReachedCommand="{x:Binding GetMoreDeploysCommand}"
-                VerticalOptions="Fill"
-                VerticalScrollBarVisibility="Never">
+        <RefreshView Grid.Row="1"
+                     Command="{x:Binding RefreshDeployCardCollectionCommand}"
+                     IsRefreshing="{x:Binding IsCollectionRefreshing}">
+            <CollectionView Grid.Row="2"
+                            Margin="0,16,0,0"
+                            ItemSizingStrategy="MeasureFirstItem"
+                            ItemsSource="{x:Binding DeployCardCollection}"
+                            ItemsUpdatingScrollMode="KeepScrollOffset"
+                            RemainingItemsThreshold="15"
+                            RemainingItemsThresholdReachedCommand="{x:Binding GetMoreDeploysCommand}"
+                            VerticalOptions="Fill"
+                            VerticalScrollBarVisibility="Never">
                 <CollectionView.ItemTemplate>
                     <datatemplates:ServiceLogCardDataTemplate x:DataType="dtos:DeployDtos" />
                 </CollectionView.ItemTemplate>
 
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout
-                        HorizontalItemSpacing="4"
-                        Orientation="Vertical"
-                        Span="{x:OnIdiom Desktop=3,
-                                         Phone=1}"
-                        VerticalItemSpacing="4" />
+                    <GridItemsLayout HorizontalItemSpacing="4"
+                                     Orientation="Vertical"
+                                     Span="{x:OnIdiom Desktop=3,
+                                                      Phone=1}"
+                                     VerticalItemSpacing="4" />
                 </CollectionView.ItemsLayout>
 
                 <CollectionView.Header>

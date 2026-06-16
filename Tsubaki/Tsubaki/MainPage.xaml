@@ -1,73 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-    x:Class="Tsubaki.MainPage"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:datatemplates="clr-namespace:Tsubaki.DataTemplates"
-    xmlns:dtos="clr-namespace:Tsubaki.Dtos"
-    xmlns:viewmodels="clr-namespace:Tsubaki.ViewModels"
-    xmlns:viewtemplates="clr-namespace:Tsubaki.ViewTemplates"
-    x:DataType="viewmodels:MainPageViewModel">
+<ContentPage x:Class="Tsubaki.MainPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:datatemplates="clr-namespace:Tsubaki.DataTemplates"
+             xmlns:dtos="clr-namespace:Tsubaki.Dtos"
+             xmlns:viewmodels="clr-namespace:Tsubaki.ViewModels"
+             xmlns:viewtemplates="clr-namespace:Tsubaki.ViewTemplates"
+             x:DataType="viewmodels:MainPageViewModel">
 
-    <Grid
-        Margin="16"
-        RowDefinitions="Auto,*"
-        RowSpacing="8">
+    <Grid Margin="16"
+          RowDefinitions="Auto,*"
+          RowSpacing="8">
         <!--  Header  -->
-        <Grid
-            Grid.Row="0"
-            Margin="4,0,0,16"
-            ColumnDefinitions="Auto,Auto,*"
-            RowDefinitions="Auto,Auto">
-            <Label
-                Grid.Row="0"
-                Grid.Column="0"
-                Style="{x:StaticResource PageTitleLabel}"
-                Text="Render Services" />
+        <Grid Grid.Row="0"
+              Margin="4,0,0,16"
+              ColumnDefinitions="Auto,Auto,*"
+              RowDefinitions="Auto,Auto">
+            <Label Grid.Row="0"
+                   Grid.Column="0"
+                   Style="{x:StaticResource PageTitleLabel}"
+                   Text="Render Services" />
 
-            <HorizontalStackLayout
-                Grid.Row="{x:OnIdiom Phone=1,
-                                     Desktop=0}"
-                Grid.Column="{x:OnIdiom Desktop=1,
-                                        Phone=0}"
-                Margin="16,0,0,0"
-                HorizontalOptions="Start"
-                Spacing="4"
-                VerticalOptions="Center">
+            <HorizontalStackLayout Grid.Row="{x:OnIdiom Phone=1,
+                                                        Desktop=0}"
+                                   Grid.Column="{x:OnIdiom Desktop=1,
+                                                           Phone=0}"
+                                   Margin="16,0,0,0"
+                                   HorizontalOptions="Start"
+                                   Spacing="4"
+                                   VerticalOptions="Center">
                 <!--  Refresh status text  -->
-                <Label
-                    FontFamily="PoppinsMedium"
-                    FontSize="16"
-                    IsVisible="{x:Binding IsServiceChanging}"
-                    Text="Service changing"
-                    VerticalOptions="End" />
+                <Label FontFamily="PoppinsMedium"
+                       FontSize="16"
+                       IsVisible="{x:Binding IsServiceChanging}"
+                       Text="Service changing"
+                       VerticalOptions="End" />
 
                 <!--  Refresh spinner  -->
-                <ActivityIndicator
-                    HeightRequest="10"
-                    IsEnabled="{x:Binding IsServiceChanging}"
-                    IsRunning="{x:Binding IsServiceChanging}"
-                    VerticalOptions="Center"
-                    WidthRequest="10" />
+                <ActivityIndicator HeightRequest="10"
+                                   IsEnabled="{x:Binding IsServiceChanging}"
+                                   IsRunning="{x:Binding IsServiceChanging}"
+                                   VerticalOptions="Center"
+                                   WidthRequest="10" />
             </HorizontalStackLayout>
 
             <!--  Refresh btn  -->
-            <Button
-                Grid.Column="2"
-                Command="{x:Binding RefreshCollectionCommand}"
-                HorizontalOptions="End"
-                ImageSource="refresh_24dp.png"
-                Scale="{x:OnIdiom Phone=2.5,
-                                  Desktop=1}"
-                Style="{x:StaticResource FlatIconBtn}"
-                VerticalOptions="Start" />
+            <Button Grid.Column="2"
+                    Command="{x:Binding RefreshCollectionCommand}"
+                    HorizontalOptions="End"
+                    ImageSource="refresh_24dp.png"
+                    Scale="{x:OnIdiom Phone=2.5,
+                                      Desktop=1}"
+                    Style="{x:StaticResource FlatIconBtn}"
+                    VerticalOptions="Start" />
         </Grid>
 
         <!--  Spinner  -->
-        <RefreshView
-            Grid.Row="1"
-            Command="{x:Binding RefreshServiceCardCollectionCommand}"
-            IsRefreshing="{x:Binding IsCollectionRefreshing}">
+        <RefreshView Grid.Row="1"
+                     Command="{x:Binding RefreshServiceCardCollectionCommand}"
+                     IsRefreshing="{x:Binding IsCollectionRefreshing}">
             <!--  Body  -->
             <CollectionView ItemsSource="{x:Binding ServiceCardCollection}">
                 <CollectionView.ItemTemplate>
@@ -75,12 +66,11 @@
                 </CollectionView.ItemTemplate>
 
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout
-                        HorizontalItemSpacing="4"
-                        Orientation="Vertical"
-                        Span="{x:OnPlatform Android=1,
-                                            WinUI=2}"
-                        VerticalItemSpacing="4" />
+                    <GridItemsLayout HorizontalItemSpacing="4"
+                                     Orientation="Vertical"
+                                     Span="{x:OnPlatform Android=1,
+                                                         WinUI=2}"
+                                     VerticalItemSpacing="4" />
                 </CollectionView.ItemsLayout>
 
                 <CollectionView.EmptyView>

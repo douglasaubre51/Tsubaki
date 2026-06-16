@@ -39,6 +39,7 @@ public partial class SupabaseViewModel(SupabaseClients supabaseServ) : BaseViewM
                         Region = dto.Region,
                         CreatedAt = dto.CreatedAt,
                         Status = dto.Status,
+                        StatusColor = dto.Status.Equals("ACTIVE_HEALTHY") ? CardColorStore.ActiveCard : CardColorStore.SuspendedCard,
                         DBHost = dto.Database!.Host ?? string.Empty
                     };
                     models.Add(model);
@@ -59,6 +60,52 @@ public partial class SupabaseViewModel(SupabaseClients supabaseServ) : BaseViewM
         {
             IsBusy = false;
             IsPageLoading = false;
+        }
+    }
+
+    [RelayCommand]
+    async Task Reload()
+    {
+        try
+        {
+            IsBusy = true;
+
+            await Task.Run(async () =>
+            {
+                var dtos = await _supabaseServ.GetAllProjects();
+                List<SupabaseProjectModel> models = [];
+
+                foreach (var dto in dtos)
+                {
+                    SupabaseProjectModel model = new SupabaseProjectModel()
+                    {
+                        Id = dto.Id,
+                        Name = dto.Name,
+                        OrganizationId = dto.OrganizationId,
+                        OrganizationSlug = dto.OrganizationSlug,
+                        Region = dto.Region,
+                        CreatedAt = dto.CreatedAt,
+                        Status = dto.Status,
+                        StatusColor = dto.Status.Equals("ACTIVE_HEALTHY") ? CardColorStore.ActiveCard : CardColorStore.SuspendedCard,
+                        DBHost = dto.Database!.Host ?? string.Empty
+                    };
+                    models.Add(model);
+                }
+
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    Projects.ReplaceRange(models);
+                    IsBusy = false;
+                });
+            });
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine("Reload supabase projects failed: " + ex.Message);
+        }
+        finally
+        {
+            IsBusy = false;
         }
     }
 }

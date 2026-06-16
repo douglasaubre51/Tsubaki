@@ -1,85 +1,75 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<DataTemplate
-    x:Class="Tsubaki.DataTemplates.ServiceLogCardDataTemplate"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:dtos="clr-namespace:Tsubaki.Dtos"
-    x:DataType="dtos:DeployDtos">
+<DataTemplate x:Class="Tsubaki.DataTemplates.ServiceLogCardDataTemplate"
+              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:dtos="clr-namespace:Tsubaki.Dtos"
+              x:DataType="dtos:DeployDtos">
 
     <Border Style="{x:StaticResource LiveCard}">
-        <Grid
-            ColumnDefinitions="*,*"
-            RowDefinitions="Auto,Auto"
-            RowSpacing="16">
+        <Grid ColumnDefinitions="*,*"
+              RowDefinitions="Auto,Auto"
+              RowSpacing="16">
             <!--  header  -->
             <VerticalStackLayout Grid.Row="0" Grid.Column="0">
-                <Label
-                    FontAttributes="Bold"
-                    FontFamily="PoppinsSemiBold"
-                    FontSize="18"
-                    Text="{x:Binding Deploy.Status}"
-                    TextColor="Black" />
+                <Label FontAttributes="Bold"
+                       FontFamily="PoppinsSemiBold"
+                       FontSize="18"
+                       Text="{x:Binding Deploy.Status}"
+                       TextColor="Black" />
 
-                <Label
-                    FontSize="10"
-                    Text="{x:Binding Deploy.Id}"
-                    TextColor="Black" />
+                <Label FontSize="10"
+                       Text="{x:Binding Deploy.Id}"
+                       TextColor="Black" />
             </VerticalStackLayout>
 
             <!--  header right  -->
-            <Label
-                Grid.Row="0"
-                Grid.Column="1"
-                FontSize="13"
-                HorizontalOptions="End"
-                Text="{x:Binding Deploy.StartedAt}"
-                TextColor="Black"
-                VerticalOptions="Start" />
+            <Label Grid.Row="0"
+                   Grid.Column="1"
+                   FontSize="13"
+                   HorizontalOptions="End"
+                   Text="{x:Binding Deploy.StartedAt}"
+                   TextColor="Black"
+                   VerticalOptions="Start" />
 
             <!--  body  left  -->
             <VerticalStackLayout Grid.Row="1">
                 <Label Style="{x:StaticResource CardSubtitleLabel}" Text="Trigger" />
 
-                <Label
-                    FontFamily="PoppinsRegular"
-                    FontSize="14"
-                    Text="{x:Binding Deploy.Trigger}"
-                    TextColor="Black" />
+                <Label FontFamily="PoppinsRegular"
+                       FontSize="14"
+                       Text="{x:Binding Deploy.Trigger}"
+                       TextColor="Black" />
             </VerticalStackLayout>
             <!--  body  right  -->
             <VerticalStackLayout Grid.Row="1" Grid.Column="1">
                 <Label Style="{x:StaticResource CardSubtitleLabel}" Text="Commit" />
 
-                <Label
-                    FontFamily="PoppinsRegular"
-                    FontSize="14"
-                    LineBreakMode="TailTruncation"
-                    MaxLines="1"
-                    Text="{x:Binding Deploy.Commit.Message}"
-                    TextColor="Black"
-                    ToolTipProperties.Text="{x:Binding Deploy.Commit.Message}" />
+                <Label FontFamily="PoppinsRegular"
+                       FontSize="14"
+                       LineBreakMode="TailTruncation"
+                       MaxLines="1"
+                       Text="{x:Binding Deploy.Commit.Message}"
+                       TextColor="Black"
+                       ToolTipProperties.Text="{x:Binding Deploy.Commit.Message}" />
             </VerticalStackLayout>
         </Grid>
 
         <Border.Triggers>
-            <DataTrigger
-                Binding="{x:Binding IsCanceled}"
-                TargetType="Border"
-                Value="True">
+            <DataTrigger Binding="{x:Binding IsCanceled}"
+                         TargetType="Border"
+                         Value="True">
                 <Setter Property="Background" Value="{x:AppThemeBinding Light=Orange, Dark={x:StaticResource CanceledCardDarkStatus}}" />
             </DataTrigger>
 
-            <DataTrigger
-                Binding="{x:Binding IsDeactivated}"
-                TargetType="Border"
-                Value="True">
+            <DataTrigger Binding="{x:Binding IsDeactivated}"
+                         TargetType="Border"
+                         Value="True">
                 <Setter Property="Background" Value="{x:AppThemeBinding Light={x:StaticResource DeactivatedCardStatus}, Dark={x:StaticResource DeactivatedCardDarkStatus}}" />
             </DataTrigger>
 
-            <DataTrigger
-                Binding="{x:Binding DidBuildFail}"
-                TargetType="Border"
-                Value="True">
+            <DataTrigger Binding="{x:Binding DidBuildFail}"
+                         TargetType="Border"
+                         Value="True">
                 <Setter Property="Background" Value="{x:AppThemeBinding Light=Red, Dark={x:StaticResource BuildFailedCardDarkStatus}}" />
             </DataTrigger>
         </Border.Triggers>

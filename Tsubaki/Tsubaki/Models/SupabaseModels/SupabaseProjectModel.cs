@@ -11,7 +11,7 @@ public class SupabaseProjectModel
     public string Region { get; set; } = string.Empty;
     public string CreatedAt { get; set; } = string.Empty;
     public string Status { get; set; } = string.Empty;
+    public string StatusColor { get; set; } = CardColorStore.SuspendedCard;
 
     public string DBHost { get; set; } = string.Empty;
-
 }

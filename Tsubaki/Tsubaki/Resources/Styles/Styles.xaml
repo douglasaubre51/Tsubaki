@@ -118,6 +118,15 @@
         </Setter>
     </Style>
 
+    <Style x:Key="FlatIconBtn2"
+           BasedOn="{x:StaticResource ActiveBtn}"
+           TargetType="Button">
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="MinimumWidthRequest" Value="44" />
+
+        <Setter Property="TextColor" Value="{x:AppThemeBinding Light=Black, Dark=White}" />
+    </Style>
+
     <Style TargetType="ActivityIndicator">
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
     </Style>

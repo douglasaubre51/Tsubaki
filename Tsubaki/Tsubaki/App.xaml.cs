@@ -2,9 +2,10 @@
 
 public partial class App : Application
 {
-    public App()
+    public App(IServiceProvider provider)
     {
         InitializeComponent();
+        Servicer.Provider = provider;
     }
 
     protected override Window CreateWindow(IActivationState? activationState)
