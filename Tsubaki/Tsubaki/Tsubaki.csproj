@@ -15,6 +15,20 @@
 		<PublishAot>True</PublishAot>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <ApplicationId>com.forge.tsubaki</ApplicationId>
+	  <ApplicationDisplayVersion>3.0.0</ApplicationDisplayVersion>
+	  <ApplicationVersion>3</ApplicationVersion>
+	  <ApplicationTitle>Tsubaki</ApplicationTitle>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <ApplicationId>com.forge.tsubaki</ApplicationId>
+	  <ApplicationDisplayVersion>3.0.0</ApplicationDisplayVersion>
+	  <ApplicationVersion>3</ApplicationVersion>
+	  <ApplicationTitle>Tsubaki</ApplicationTitle>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
