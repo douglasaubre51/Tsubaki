@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Tsubaki.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Tsubaki.ViewModels"
+             Title="Settings"
+             x:DataType="viewmodels:SettingsViewModel"
+             Shell.NavBarIsVisible="False">
+
+    <!--  Settings View  -->
+    <ScrollView Orientation="Vertical">
+        <Grid Margin="16"
+              ColumnDefinitions="*,Auto"
+              RowDefinitions="Auto,Auto,Auto,*,Auto"
+              RowSpacing="32">
+            <!--  Page Title  -->
+            <Label Grid.Row="0"
+                   Style="{x:StaticResource PageTitleLabel}"
+                   Text="Settings" />
+
+            <!--  Render auth  -->
+            <VerticalStackLayout Grid.Row="1"
+                                 Grid.Column="0"
+                                 Spacing="16">
+                <Label Style="{x:StaticResource CardTitleLabel}" Text="Render AuthKey" />
+
+                <Entry IsEnabled="{x:Binding RenderKeyFieldEnabled}"
+                       Placeholder="Enter key here"
+                       Text="{x:Binding RenderKeyField,
+                                        Mode=TwoWay}"
+                       TextChanged="Entry_TextChanged" />
+            </VerticalStackLayout>
+
+            <!--  Edit render auth field btn  -->
+            <Button Grid.Row="1"
+                    Grid.Column="1"
+                    Command="{x:Binding EnableRenderKeyFieldCommand}"
+                    ImageSource="edit_28dp.png"
+                    Style="{x:StaticResource FlatIconBtn2}"
+                    VerticalOptions="End" />
+
+            <!--  Supabase auth  -->
+            <VerticalStackLayout Grid.Row="2"
+                                 Grid.ColumnSpan="2"
+                                 Spacing="16">
+                <Label Style="{x:StaticResource CardTitleLabel}" Text="Supabase AuthKeys" />
+
+                <Grid ColumnDefinitions="*,Auto">
+                    <Entry Grid.Column="0"
+                           IsEnabled="{x:Binding SupabaseKeyField1Enabled}"
+                           Placeholder="Supabase account 1"
+                           Text="{x:Binding SupabaseKeyField1,
+                                            Mode=TwoWay}"
+                           TextChanged="Entry_TextChanged_1" />
+
+                    <!--  Edit supabase auth field 1 btn  -->
+                    <Button Grid.Column="1"
+                            Command="{x:Binding EnableSupabaseKeyField1Command}"
+                            ImageSource="edit_28dp.png"
+                            Style="{x:StaticResource FlatIconBtn2}"
+                            VerticalOptions="Center" />
+                </Grid>
+
+                <Grid ColumnDefinitions="*,Auto">
+                    <Entry Grid.Column="0"
+                           IsEnabled="{x:Binding SupabaseKeyField2Enabled}"
+                           Placeholder="Supabase account 2"
+                           Text="{x:Binding SupabaseKeyField2,
+                                            Mode=TwoWay}"
+                           TextChanged="Entry_TextChanged_2" />
+
+                    <!--  Edit supabase auth field 2 btn  -->
+                    <Button Grid.Column="1"
+                            Command="{x:Binding EnableSupabaseKeyField2Command}"
+                            ImageSource="edit_28dp.png"
+                            Style="{x:StaticResource FlatIconBtn2}"
+                            VerticalOptions="Center" />
+                </Grid>
+            </VerticalStackLayout>
+
+            <Button Grid.Row="4"
+                    Grid.ColumnSpan="2"
+                    Command="{x:Binding SaveAllFieldsCommand}"
+                    IsVisible="{x:Binding IsDirty}"
+                    Text="Save changes" />
+        </Grid>
+    </ScrollView>
+</ContentPage>

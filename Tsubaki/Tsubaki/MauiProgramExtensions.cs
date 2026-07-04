@@ -32,8 +32,11 @@ public static class MauiProgramExtensions
         builder.Services.AddSingleton<SupabaseClients>();
         builder.Services.AddSingleton<MisatoApiService>();
 
+
+        // Add ViewModels
         builder.Services.AddSingleton<MainPageViewModel>();
         builder.Services.AddSingleton<SupabaseViewModel>();
+        builder.Services.AddSingleton<SettingsViewModel>();
 
         builder.Services.AddTransient<DeploysViewModel>();
 

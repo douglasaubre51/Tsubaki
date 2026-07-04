@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Shell
-    x:Class="Tsubaki.AppShell"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Tsubaki"
-    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    xmlns:views="clr-namespace:Tsubaki.Views"
-    Title="Tsubaki"
-    Shell.FlyoutBehavior="Disabled">
+<Shell x:Class="Tsubaki.AppShell"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:Tsubaki"
+       xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+       xmlns:views="clr-namespace:Tsubaki.Views"
+       Title="Tsubaki"
+       Shell.FlyoutBehavior="Disabled">
     <Shell.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{x:AppThemeBinding Light=White, Dark={x:StaticResource OffBlack}}" StatusBarStyle="{x:AppThemeBinding Light=DarkContent, Dark=LightContent}" />
     </Shell.Behaviors>
@@ -19,6 +18,10 @@
 
         <Tab Title="Supabase">
             <ShellContent ContentTemplate="{DataTemplate views:SupabaseView}" Route="SupabaseView" />
+        </Tab>
+
+        <Tab Title="Settings">
+            <ShellContent ContentTemplate="{DataTemplate views:SettingsView}" Route="SettingsView" />
         </Tab>
     </TabBar>
 </Shell>

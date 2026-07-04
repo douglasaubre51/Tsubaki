@@ -6,7 +6,8 @@ public class RenderClients
     public RenderClients()
     {
         _client = new HttpClient();
-        _client.DefaultRequestHeaders.Add("authorization", "Bearer " + RenderKeyStore.ApiKey);
+        string renderKey = Storage.SecureStorage.GetRenderKey().Result;
+        _client.DefaultRequestHeaders.Add("authorization", "Bearer " + renderKey);
     }
 
     public async Task<bool> KeepAlive(string serviceUrl)

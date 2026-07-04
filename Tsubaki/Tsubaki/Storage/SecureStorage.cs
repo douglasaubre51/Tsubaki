@@ -2,11 +2,15 @@
 
 public static class SecureStorage
 {
+    public async static Task<string> GetRenderKey()
+        => await Microsoft.Maui.Storage.SecureStorage.Default.GetAsync("RenderKey") ?? string.Empty;
     public async static Task<string> GetSupabasePAT()
         => await Microsoft.Maui.Storage.SecureStorage.Default.GetAsync("SupabaseKey") ?? string.Empty;
     public async static Task<string> GetSupabasePAT2()
         => await Microsoft.Maui.Storage.SecureStorage.Default.GetAsync("SupabaseKey2") ?? string.Empty;
 
+    public async static Task SetRenderKey(string key)
+        => await Microsoft.Maui.Storage.SecureStorage.Default.SetAsync("RenderKey", key);
     public async static Task SetSupabasePAT(string key)
         => await Microsoft.Maui.Storage.SecureStorage.Default.SetAsync("SupabaseKey", key);
     public async static Task SetSupabasePAT2(string key)
