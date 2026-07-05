@@ -16,6 +16,10 @@
 	  <IsAotCompatible>True</IsAotCompatible>
 	  <AndroidUseAapt2>True</AndroidUseAapt2>
 	  <IsTrimmable>False</IsTrimmable>
+	  <ApplicationVersion></ApplicationVersion>
+	  <ApplicationDisplayVersion></ApplicationDisplayVersion>
+	  <ApplicationTitle></ApplicationTitle>
+	  <ApplicationId></ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -23,6 +27,10 @@
 	  <AndroidUseAapt2>True</AndroidUseAapt2>
 	  <IsTrimmable>False</IsTrimmable>
 	  <PublishTrimmed>True</PublishTrimmed>
+	  <ApplicationVersion></ApplicationVersion>
+	  <ApplicationDisplayVersion></ApplicationDisplayVersion>
+	  <ApplicationTitle></ApplicationTitle>
+	  <ApplicationId></ApplicationId>
 	</PropertyGroup>
 
 	<ItemGroup>

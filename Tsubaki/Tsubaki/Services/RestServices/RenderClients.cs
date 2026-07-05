@@ -3,11 +3,11 @@
 public class RenderClients
 {
     HttpClient _client;
+    bool isFirstTry;
+
     public RenderClients()
     {
         _client = new HttpClient();
-        string renderKey = Storage.SecureStorage.GetRenderKey().Result;
-        _client.DefaultRequestHeaders.Add("authorization", "Bearer " + renderKey);
     }
 
     public async Task<bool> KeepAlive(string serviceUrl)
@@ -75,6 +75,13 @@ public class RenderClients
     }
     public async Task<List<RenderDtos>?> GetAllServices()
     {
+        if (isFirstTry is false)
+        {
+            string renderKey = await Storage.SecureStorage.GetRenderKey() ?? string.Empty;
+            _client.DefaultRequestHeaders.Add("authorization", "Bearer " + renderKey);
+            isFirstTry = true;
+        }
+
         Debug.WriteLine("fetching all web services!");
         var response = await _client.GetAsync($"{EnvStorage.RenderBaseURL}/services");
         if (response.IsSuccessStatusCode is false)

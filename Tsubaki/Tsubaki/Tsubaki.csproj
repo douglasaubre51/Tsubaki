@@ -16,17 +16,17 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	  <ApplicationId>com.forge.tsubaki</ApplicationId>
-	  <ApplicationDisplayVersion>3.0.0</ApplicationDisplayVersion>
-	  <ApplicationVersion>3</ApplicationVersion>
-	  <ApplicationTitle>Tsubaki</ApplicationTitle>
+	  <ApplicationId></ApplicationId>
+	  <ApplicationDisplayVersion></ApplicationDisplayVersion>
+	  <ApplicationVersion></ApplicationVersion>
+	  <ApplicationTitle></ApplicationTitle>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-	  <ApplicationId>com.forge.tsubaki</ApplicationId>
-	  <ApplicationDisplayVersion>3.0.0</ApplicationDisplayVersion>
-	  <ApplicationVersion>3</ApplicationVersion>
-	  <ApplicationTitle>Tsubaki</ApplicationTitle>
+	  <ApplicationId></ApplicationId>
+	  <ApplicationDisplayVersion></ApplicationDisplayVersion>
+	  <ApplicationVersion></ApplicationVersion>
+	  <ApplicationTitle></ApplicationTitle>
 	</PropertyGroup>
 
 	<ItemGroup>
