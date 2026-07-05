@@ -31,7 +31,8 @@
             <CollectionView.ItemsLayout>
                 <GridItemsLayout HorizontalItemSpacing="4"
                                  Orientation="Vertical"
-                                 Span="3"
+                                 Span="{x:OnIdiom Phone=1,
+                                                  Desktop=3}"
                                  VerticalItemSpacing="4" />
             </CollectionView.ItemsLayout>
         </CollectionView>

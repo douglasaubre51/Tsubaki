@@ -9,13 +9,25 @@
              x:DataType="viewmodels:DeploysViewModel"
              Shell.NavBarIsVisible="False">
 
-    <Grid Margin="10" RowDefinitions="Auto,*">
+    <Grid Margin="10" RowDefinitions="Auto,Auto,*">
+
+        <Button Grid.Row="0"
+                Padding="0"
+                Background="{x:AppThemeBinding Light=Transparent,
+                                               Dark=Black}"
+                Command="{x:Binding LaunchServiceCommand}"
+                CornerRadius="16"
+                ImageSource="rocket_launch_28dp.png"
+                Text="Launch app on browser"
+                TextColor="{x:AppThemeBinding Light=Black,
+                                              Dark=Whitesmoke}" />
+
         <!--  Service log cards  -->
-        <ActivityIndicator Grid.Row="0"
+        <ActivityIndicator Grid.Row="1"
                            IsRunning="{x:Binding IsBusy}"
                            IsVisible="{x:Binding IsBusy}" />
 
-        <RefreshView Grid.Row="1"
+        <RefreshView Grid.Row="2"
                      Command="{x:Binding RefreshDeployCardCollectionCommand}"
                      IsRefreshing="{x:Binding IsCollectionRefreshing}">
             <CollectionView Grid.Row="2"

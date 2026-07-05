@@ -136,7 +136,7 @@ public partial class MainPageViewModel(RenderClients renderClient) : BaseViewMod
         {
             await Shell.Current.GoToAsync(
                 "Deploys",
-                false,
+                true,
                 new Dictionary<string, object>
                 {
                     { "SelectedService" , selectedService  }
