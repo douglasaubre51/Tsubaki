@@ -22,7 +22,9 @@
             <VerticalStackLayout Grid.Row="1"
                                  Grid.Column="0"
                                  Spacing="16">
-                <Label Style="{x:StaticResource CardTitleLabel}" Text="Render AuthKey" />
+                <Label Style="{x:StaticResource CardTitleLabel}"
+                       Text="Render AuthKey"
+                       TextColor="{x:AppThemeBinding Dark=Whitesmoke}" />
 
                 <Entry IsEnabled="{x:Binding RenderKeyFieldEnabled}"
                        Placeholder="Enter key here"
@@ -43,7 +45,9 @@
             <VerticalStackLayout Grid.Row="2"
                                  Grid.ColumnSpan="2"
                                  Spacing="16">
-                <Label Style="{x:StaticResource CardTitleLabel}" Text="Supabase AuthKeys" />
+                <Label Style="{x:StaticResource CardTitleLabel}"
+                       Text="Supabase AuthKeys"
+                       TextColor="{x:AppThemeBinding Dark=Whitesmoke}" />
 
                 <Grid ColumnDefinitions="*,Auto">
                     <Entry Grid.Column="0"

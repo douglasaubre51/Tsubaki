@@ -12,15 +12,15 @@
     </Shell.Behaviors>
 
     <TabBar>
-        <Tab Title="Render">
+        <Tab Title="Render" Icon="webhook_24dp.png">
             <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage" />
         </Tab>
 
-        <Tab Title="Supabase">
+        <Tab Title="Supabase" Icon="storage_24dp.png">
             <ShellContent ContentTemplate="{DataTemplate views:SupabaseView}" Route="SupabaseView" />
         </Tab>
 
-        <Tab Title="Settings">
+        <Tab Title="Settings" Icon="settings_28dp.png">
             <ShellContent ContentTemplate="{DataTemplate views:SettingsView}" Route="SettingsView" />
         </Tab>
     </TabBar>
